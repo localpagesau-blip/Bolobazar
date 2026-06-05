@@ -1,0 +1,35 @@
+# Deploy to Render.com — one-click setup
+# https://render.com/docs/blueprint-spec
+
+services:
+  # Backend API
+  - type: web
+    name: bolobazaar-api
+    env: python
+    buildCommand: pip install -r voice-agent/requirements.txt && pip install fastapi uvicorn sqlalchemy aiohttp twilio
+    startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port 8001
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12
+
+  # Voice Agent
+  - type: web
+    name: bolobazaar-voice
+    env: python
+    buildCommand: pip install -r voice-agent/requirements.txt
+    startCommand: cd voice-agent && uvicorn main:app --host 0.0.0.0 --port 8000
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12
+      - key: BACKEND_URL
+        value: https://bolobazaar-api.onrender.com
+
+  # Dashboard (static site)
+  - type: web
+    name: bolobazaar-dashboard
+    env: static
+    buildCommand: cd dashboard && npm install && npm run build
+    staticPublishPath: ./dashboard/dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://bolobazaar-api.onrender.com
