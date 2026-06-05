@@ -1,0 +1,8 @@
+{
+  "milk": {"price": 30, "unit": "packet", "stock": 50},
+  "bread": {"price": 40, "unit": "packet", "stock": 20},
+  "eggs": {"price": 6, "unit": "piece", "stock": 100},
+  "atta": {"price": 450, "unit": "5kg", "stock": 10},
+  "sugar": {"price": 40, "unit": "kg", "stock": 30},
+  "tea": {"price": 150, "unit": "250g", "stock": 15}
+}
